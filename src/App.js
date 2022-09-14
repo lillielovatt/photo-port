@@ -6,6 +6,7 @@ import "./App.css";
 import About from "./components/About/index";
 import Navigation from "./components/Nav";
 import Gallery from "./components/Gallery";
+import ContactForm from "./components/Contact";
 
 // React components must always return a single parent JSX element - but it may have many children elements
 function App() {
@@ -36,6 +37,7 @@ function App() {
             ></Navigation>
             <main>
                 <div>
+                    <ContactForm></ContactForm>
                     <Gallery currentCategory={currentCategory}></Gallery>
                     <About></About>
                 </div>
