@@ -27,7 +27,7 @@ function App() {
     const [currentCategory, setCurrentCategory] = useState(categories[0]);
 
     return (
-        //returns JSX, which can represent HTML in JS
+        // returns JSX, which can represent HTML in JS
         <div>
             <Navigation
                 categories={categories}
@@ -36,7 +36,7 @@ function App() {
             ></Navigation>
             <main>
                 <div>
-                    <Gallery></Gallery>
+                    <Gallery currentCategory={currentCategory}></Gallery>
                     <About></About>
                 </div>
             </main>
