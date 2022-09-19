@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function Modal(props) {
-    const { currentPhoto, setIsModalOpen } = props;
+    const { currentPhoto, onClose } = props;
     const { name, category, description, index } = currentPhoto;
     return (
         <div className="modalBackdrop">
@@ -12,7 +12,7 @@ export default function Modal(props) {
                     alt="current category"
                 />
                 <p>{description}</p>
-                <button type="button">
+                <button type="button" onClick={onClose}>
                     Close this modal
                 </button>
             </div>

@@ -130,12 +130,8 @@ function PhotoList(props) {
         setCurrentPhoto({ ...image, index: i });
         // spread operaor used to add index:i key value pair to current photo state
 
-        setIsModalOpen(true);
-
-        // only render modal if isModalOpen=true
-        {
-            isModalOpen && <Modal currentPhoto={currentPhoto}></Modal>;
-        }
+        // toggles from true to false
+        setIsModalOpen(!isModalOpen);
     };
 
     return (
@@ -150,8 +146,12 @@ function PhotoList(props) {
                         key={image.name}
                     />
                 ))}
-                {isModalOpen && <Modal currentPhoto={currentPhoto}
-                setIsModalOpen={setIsModalOpen}></Modal>}
+                {isModalOpen && (
+                    <Modal
+                        currentPhoto={currentPhoto}
+                        onClose={toggleModal}
+                    ></Modal>
+                )}
             </div>
         </div>
     );
