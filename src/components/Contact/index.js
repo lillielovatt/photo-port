@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { validateEmail } from "../../utils/helpers";
 
 function ContactForm() {
     const [formState, setFormState] = useState({
@@ -7,11 +8,35 @@ function ContactForm() {
         message: "",
     });
 
+    const [errorMessage, setErrorMessage] = useState("");
+
+    // setErrorMessage(...errorMessage,[event.target.name]: "Your email is invalid");
+
     const { name, email, message } = formState;
 
     function handleChange(event) {
+        if (event.target.name === "email") {
+            const isValid = validateEmail(event.target.value);
+            if (!isValid) {
+                setErrorMessage("Your email is invalid");
+            } else {
+                setErrorMessage("");
+            }
+        } else {
+            if (!event.target.value.length) {
+                setErrorMessage(`${event.target.name} is required.`);
+            } else {
+                setErrorMessage("");
+            }
+        }
+
+        if (!errorMessage) {
+            setFormState({
+                ...formState,
+                [event.target.name]: event.target.value,
+            });
+        }
         // We use the spread operator, ...formState, so we can retain the other key-value pairs in this object.
-        setFormState({ ...formState, [event.target.name]: event.target.value });
         // we have to wrap the key part of the key-value pair in [] to indicate is not the name, but a variable value
     }
 
@@ -29,7 +54,7 @@ function ContactForm() {
                     <label htmlFor="name">Name:</label>
                     <input
                         type="text"
-                        onChange={handleChange}
+                        onBlur={handleChange}
                         defaultValue={name}
                         name="name"
                     />
@@ -39,7 +64,7 @@ function ContactForm() {
                     <input
                         type="email"
                         name="email"
-                        onChange={handleChange}
+                        onBlur={handleChange}
                         defaultValue={email}
                     />
                 </div>
@@ -48,10 +73,16 @@ function ContactForm() {
                     <textarea
                         name="message"
                         rows="5"
-                        onChange={handleChange}
+                        onBlur={handleChange}
                         defaultValue={message}
                     />
                 </div>
+                {/* short circuit */}
+                {errorMessage && (
+                    <div>
+                        <p className="error-text">{errorMessage}</p>
+                    </div>
+                )}
                 <button type="submit">Submit</button>
             </form>
         </section>

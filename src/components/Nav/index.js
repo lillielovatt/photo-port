@@ -3,7 +3,13 @@ import { capitalizeFirstLetter } from "../../utils/helpers";
 
 const Navigation = (props) => {
     //  initializing the category state as an array of a few objects
-    const { categories = [], setCurrentCategory, currentCategory } = props;
+    const {
+        categories = [],
+        setCurrentCategory,
+        currentCategory,
+        contactSelected,
+        setContactSelected,
+    } = props;
     useEffect(() => {
         document.title = capitalizeFirstLetter(currentCategory.name);
     }, [currentCategory]);
@@ -25,12 +31,23 @@ const Navigation = (props) => {
             <nav>
                 <ul className="flex-row">
                     <li className="mx-2">
-                        <a data-testid="about" href="#about">
+                        <a
+                            data-testid="about"
+                            href="#about"
+                            onClick={() => setContactSelected(false)}
+                        >
                             About Me
                         </a>
                     </li>
-                    <li>
-                        <span>Contact</span>
+                    <li className={`mx-2 ${contactSelected && "navActive"}`}>
+                        <span
+                            onClick={() => {
+                                setCurrentCategory(currentCategory); //said 'category' but that does not exist
+                                setContactSelected(true);
+                            }}
+                        >
+                            Contact
+                        </span>
                     </li>
                     {/* whenever we map over anything in JSX, the outermost element must have a key attribute */}
                     {/* that's set to something unique (helps React keep track of items in the virtual DOM) */}
