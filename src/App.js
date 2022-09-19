@@ -40,21 +40,15 @@ function App() {
             ></Navigation>
 
             {/* if contactSelected is FALSE, then display Gallery/About. Else, if contactSelected is TRUE, display ContactForm */}
-            {!contactSelected ? (
-                <>
-                    <Gallery currentCategory={{ currentCategory }}></Gallery>
-                    <About></About>
-                </>
-            ) : (
-                <ContactForm></ContactForm>
-            )}
-
             <main>
-                <div>
+                {!contactSelected ? (
+                    <>
+                        <Gallery currentCategory={currentCategory}></Gallery>
+                        <About></About>
+                    </>
+                ) : (
                     <ContactForm></ContactForm>
-                    <Gallery currentCategory={currentCategory}></Gallery>
-                    <About></About>
-                </div>
+                )}
             </main>
         </div>
     );

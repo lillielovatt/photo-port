@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Modal from "../Modal";
 
 // Remember that components are just functions. The only difference is that they return JSX and may use React Hooks.
 function PhotoList(props) {
@@ -122,6 +123,21 @@ function PhotoList(props) {
 
     const currentPhotos = photos.filter((photo) => photo.category === category);
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const [currentPhoto, setCurrentPhoto] = useState();
+    const toggleModal = (image, i) => {
+        setCurrentPhoto({ ...image, index: i });
+        // spread operaor used to add index:i key value pair to current photo state
+
+        setIsModalOpen(true);
+
+        // only render modal if isModalOpen=true
+        {
+            isModalOpen && <Modal currentPhoto={currentPhoto}></Modal>;
+        }
+    };
+
     return (
         <div>
             <div className="flex-row">
@@ -130,9 +146,12 @@ function PhotoList(props) {
                         src={require(`../../assets/small/${category}/${i}.jpg`)}
                         alt={image.name}
                         className="img-thumbnail mx-1"
+                        onClick={() => toggleModal(image, i)}
                         key={image.name}
                     />
                 ))}
+                {isModalOpen && <Modal currentPhoto={currentPhoto}
+                setIsModalOpen={setIsModalOpen}></Modal>}
             </div>
         </div>
     );

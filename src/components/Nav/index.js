@@ -10,9 +10,9 @@ const Navigation = (props) => {
         contactSelected,
         setContactSelected,
     } = props;
-    useEffect(() => {
-        document.title = capitalizeFirstLetter(currentCategory.name);
-    }, [currentCategory]);
+    // useEffect(() => {
+    //     document.title = capitalizeFirstLetter(currentCategory.name);
+    // }, [currentCategory]);
     // 1st argument is CB function, 2nd is array with a single element, currentCategory
     // 2nd directs hook to re-render the component on changes to the value of this state
     // if currentCategory changes now, the component will re-render so that the change in document.title will be visible to user
@@ -42,7 +42,6 @@ const Navigation = (props) => {
                     <li className={`mx-2 ${contactSelected && "navActive"}`}>
                         <span
                             onClick={() => {
-                                setCurrentCategory(currentCategory); //said 'category' but that does not exist
                                 setContactSelected(true);
                             }}
                         >
@@ -58,6 +57,7 @@ const Navigation = (props) => {
                         <li
                             className={`mx-1 ${
                                 currentCategory.name === category.name &&
+                                !contactSelected &&
                                 "navActive" //first half will get evaluated and IF true, then second bit will be returned
                             }`}
                             key={category.name}
@@ -65,6 +65,7 @@ const Navigation = (props) => {
                             <span
                                 onClick={() => {
                                     setCurrentCategory(category);
+                                    setContactSelected(false);
                                 }}
                             >
                                 {capitalizeFirstLetter(category.name)}
