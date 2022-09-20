@@ -27,7 +27,18 @@ function App() {
 
     const [currentCategory, setCurrentCategory] = useState(categories[0]);
 
-    const [contactSelected, setContactSelected] = useState(false);
+    const [pageSelected, setPageSelected] = useState("about");
+
+    const returnPage = (pageSelected) => {
+        if (pageSelected === "about") {
+            return <About />;
+        } else if (pageSelected === "contact") {
+            return <ContactForm />;
+        } else if (pageSelected === "gallery") {
+            return <Gallery currentCategory={currentCategory}></Gallery>;
+        }
+    };
+
     return (
         // returns JSX, which can represent HTML in JS
         <div>
@@ -35,20 +46,25 @@ function App() {
                 categories={categories}
                 setCurrentCategory={setCurrentCategory}
                 currentCategory={currentCategory}
-                contactSelected={contactSelected}
-                setContactSelected={setContactSelected}
+                pageSelected={pageSelected}
+                setPageSelected={setPageSelected}
+
+                // contactSelected={contactSelected}
+                // setContactSelected={setContactSelected}
             ></Navigation>
 
             {/* if contactSelected is FALSE, then display Gallery/About. Else, if contactSelected is TRUE, display ContactForm */}
             <main>
-                {!contactSelected ? (
+                {returnPage(pageSelected)}
+
+                {/* {!contactSelected ? (
                     <>
                         <Gallery currentCategory={currentCategory}></Gallery>
                         <About></About>
                     </>
                 ) : (
                     <ContactForm></ContactForm>
-                )}
+                )} */}
             </main>
         </div>
     );

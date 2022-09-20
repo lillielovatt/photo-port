@@ -7,8 +7,8 @@ const Navigation = (props) => {
         categories = [],
         setCurrentCategory,
         currentCategory,
-        contactSelected,
-        setContactSelected,
+        pageSelected,
+        setPageSelected,
     } = props;
     // useEffect(() => {
     //     document.title = capitalizeFirstLetter(currentCategory.name);
@@ -34,18 +34,22 @@ const Navigation = (props) => {
                         <a
                             data-testid="about"
                             href="#about"
-                            onClick={() => setContactSelected(false)}
+                            onClick={() => setPageSelected("about")}
                         >
                             About Me
                         </a>
                     </li>
-                    <li className={`mx-2 ${contactSelected && "navActive"}`}>
+                    <li
+                        className={`mx-2 ${
+                            pageSelected === "contact" && "navActive"
+                        }`}
+                    >
                         <span
                             onClick={() => {
-                                setContactSelected(true);
+                                setPageSelected("contact");
                             }}
                         >
-                            Contact
+                            <a href="#contact">Contact</a>
                         </span>
                     </li>
                     {/* whenever we map over anything in JSX, the outermost element must have a key attribute */}
@@ -57,19 +61,20 @@ const Navigation = (props) => {
                         <li
                             className={`mx-1 ${
                                 currentCategory.name === category.name &&
-                                !contactSelected &&
+                                pageSelected === "gallery" &&
                                 "navActive" //first half will get evaluated and IF true, then second bit will be returned
                             }`}
                             key={category.name}
                         >
-                            <span
+                            <a
                                 onClick={() => {
                                     setCurrentCategory(category);
-                                    setContactSelected(false);
+                                    setPageSelected("gallery");
                                 }}
+                                href={`#${category.name}`}
                             >
                                 {capitalizeFirstLetter(category.name)}
-                            </span>
+                            </a>
                         </li>
                     ))}
                 </ul>

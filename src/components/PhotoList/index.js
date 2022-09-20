@@ -126,12 +126,14 @@ function PhotoList(props) {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const [currentPhoto, setCurrentPhoto] = useState();
-    const toggleModal = (image, i) => {
+
+    // more like openModal, since closing it is something for Modal to do
+    const openModal = (image, i) => {
         setCurrentPhoto({ ...image, index: i });
-        // spread operaor used to add index:i key value pair to current photo state
+        // spread operator used to add index:i key value pair to current photo state
 
         // toggles from true to false
-        setIsModalOpen(!isModalOpen);
+        setIsModalOpen(true);
     };
 
     return (
@@ -142,14 +144,15 @@ function PhotoList(props) {
                         src={require(`../../assets/small/${category}/${i}.jpg`)}
                         alt={image.name}
                         className="img-thumbnail mx-1"
-                        onClick={() => toggleModal(image, i)}
+                        onClick={() => openModal(image, i)}
                         key={image.name}
                     />
                 ))}
                 {isModalOpen && (
                     <Modal
                         currentPhoto={currentPhoto}
-                        onClose={toggleModal}
+                        onClose={() => setIsModalOpen(false)}
+                        // we are trying to call it, not passed as prop whenever you want, so need arrow function
                     ></Modal>
                 )}
             </div>
